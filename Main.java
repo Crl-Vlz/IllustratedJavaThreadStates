@@ -9,7 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Main {
+public class Main { //mike_features
 
     private JFrame window;
     private Thread ths[];
