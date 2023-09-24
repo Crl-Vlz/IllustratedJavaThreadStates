@@ -85,17 +85,24 @@ public class StateA extends Thread {
                     btnWait.setEnabled(false);
                     sp.revalidate();
                 });
-                try {
-                    Thread.sleep(nTime);
-                } catch (InterruptedException err) {
-                    System.err.println(err.getMessage());
-                }
-                //imgLabel.setIcon(imgRunning);
-                SwingUtilities.invokeLater(() -> {
-                    btnStop.setEnabled(true);
-                    btnWait.setEnabled(true);
-                    sp.revalidate();
-                });
+
+                // Creates a new thread to not interrupt the EDT
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(nTime);
+                    } catch (InterruptedException err) {
+                        System.err.println(err.getMessage());
+                    }
+
+                    SwingUtilities.invokeLater(() -> {
+                        imgLabel.setIcon(imgRunning);
+                        btnStop.setEnabled(true);
+                        btnWait.setEnabled(true);
+                        sp.revalidate();
+                    });
+
+                }).start();
+
             }
 
         });
