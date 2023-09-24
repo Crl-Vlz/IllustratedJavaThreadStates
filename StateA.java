@@ -41,6 +41,7 @@ public class StateA extends Thread {
         imgDead = new ImageIcon("Images/dead.jpg");
 
         panel.add(btnStart);
+        panel.add(imgLabel);
 
         btnStart.addActionListener(new ActionListener() {
 
@@ -49,7 +50,6 @@ public class StateA extends Thread {
                 start();
                 SwingUtilities.invokeLater(() -> {
                     panel.add(text);
-                    panel.add(imgLabel);
                     imgLabel.setIcon(imgRunning);
                     panel.add(btnWait);
                     panel.add(btnStop);
@@ -64,6 +64,7 @@ public class StateA extends Thread {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                imgLabel.setIcon(imgDead);
                 SwingUtilities.invokeLater(() -> {
                     btnStop.setEnabled(false);
                     btnWait.setEnabled(false);
@@ -77,9 +78,9 @@ public class StateA extends Thread {
         btnWait.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                imgLabel.setIcon(imgSleeping);
                 int nTime = Integer.parseInt(text.getText());
                 SwingUtilities.invokeLater(() -> {
-                    imgLabel.setIcon(imgSleeping);
                     btnStop.setEnabled(false);
                     btnWait.setEnabled(false);
                     sp.revalidate();
@@ -89,8 +90,8 @@ public class StateA extends Thread {
                 } catch (InterruptedException err) {
                     System.err.println(err.getMessage());
                 }
+                //imgLabel.setIcon(imgRunning);
                 SwingUtilities.invokeLater(() -> {
-                    imgLabel.setIcon(imgRunning);
                     btnStop.setEnabled(true);
                     btnWait.setEnabled(true);
                     sp.revalidate();
@@ -104,17 +105,17 @@ public class StateA extends Thread {
         panel.setVisible(true);
         SwingUtilities.invokeLater(() -> {
             sp.add(panel);
+            imgLabel.setIcon(imgCreated);
             sp.revalidate();
         });
 
-        System.out.println("thread created");
     }
 
     @Override
     public void run() {
         isRunning = true;
         while (isRunning)
-            System.out.println("thread running");
+            continue;
     }
 
 }
