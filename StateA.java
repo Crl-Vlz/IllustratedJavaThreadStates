@@ -27,8 +27,8 @@ public class StateA extends Thread {
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        imgLabel= new JLabel();
-        
+        imgLabel = new JLabel();
+
         JButton btnStart = new JButton("Start");
         JButton btnWait = new JButton("Wait");
         JButton btnStop = new JButton("Stop");
@@ -78,9 +78,9 @@ public class StateA extends Thread {
         btnWait.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                imgLabel.setIcon(imgSleeping);
                 int nTime = Integer.parseInt(text.getText());
                 SwingUtilities.invokeLater(() -> {
+                    imgLabel.setIcon(imgSleeping);
                     btnStop.setEnabled(false);
                     btnWait.setEnabled(false);
                     sp.revalidate();
@@ -90,7 +90,7 @@ public class StateA extends Thread {
                 } catch (InterruptedException err) {
                     System.err.println(err.getMessage());
                 }
-                imgLabel.setIcon(imgRunning);
+                //imgLabel.setIcon(imgRunning);
                 SwingUtilities.invokeLater(() -> {
                     btnStop.setEnabled(true);
                     btnWait.setEnabled(true);
