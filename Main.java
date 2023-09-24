@@ -15,7 +15,7 @@ public class Main { // mike_features
     private static int nThreads = 0;
 
     private int sizeX = 800;
-    private int sizeY = 400;
+    private int sizeY = 420;
 
     public Main() {
 

@@ -33,7 +33,7 @@ public class StateA extends Thread {
         JButton btnWait = new JButton("Wait");
         JButton btnStop = new JButton("Stop");
 
-        JTextArea text = new JTextArea("0");
+        JTextArea text = new JTextArea("1000");
 
         imgCreated = new ImageIcon("Images/born.gif");
         imgRunning = new ImageIcon("Images/running.gif");
@@ -61,7 +61,6 @@ public class StateA extends Thread {
         });
 
         btnStop.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 imgLabel.setIcon(imgDead);
@@ -81,7 +80,6 @@ public class StateA extends Thread {
                 int nTime = Integer.parseInt(text.getText());
                 SwingUtilities.invokeLater(() -> {
                     imgLabel.setIcon(imgSleeping);
-                    btnStop.setEnabled(false);
                     btnWait.setEnabled(false);
                     sp.revalidate();
                 });
@@ -93,13 +91,13 @@ public class StateA extends Thread {
                     } catch (InterruptedException err) {
                         System.err.println(err.getMessage());
                     }
-
-                    SwingUtilities.invokeLater(() -> {
-                        imgLabel.setIcon(imgRunning);
-                        btnStop.setEnabled(true);
-                        btnWait.setEnabled(true);
-                        sp.revalidate();
-                    });
+                    if(isRunning){
+                        SwingUtilities.invokeLater(() -> {
+                            imgLabel.setIcon(imgRunning);
+                            btnWait.setEnabled(true);
+                            sp.revalidate();
+                        });
+                    }
 
                 }).start();
 
