@@ -86,6 +86,7 @@ public class StateA extends Thread {
                     sp.revalidate();
                 });
 
+                // Creates a new thread to not interrupt the EDT
                 new Thread(() -> {
                     try {
                         Thread.sleep(nTime);
