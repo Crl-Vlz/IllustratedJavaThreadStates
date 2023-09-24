@@ -32,25 +32,32 @@ public class Main { //mike_features
         JScrollPane sp = new JScrollPane(threadPanel);
         sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
-        JButton btnCreate = new JButton("Create new Thread");
+        JButton btnCreateInheritance = new JButton("Create new Inherited Thread");
+        JButton btnCreateInterface = new JButton("Create new Interface Thread");
 
-        btnCreate.addActionListener(new ActionListener() {
+        btnCreateInheritance.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Main.nThreads % 2 == 0) {
-                    ths[Main.nThreads] = new StateA(threadPanel);
-                } else {
-                    StateB state = new StateB(threadPanel);
-                    ths[Main.nThreads] = new Thread(state);
-                }
+                ths[Main.nThreads] = new StateA(threadPanel);
+                Main.nThreads++;
+            }
+
+        });
+        btnCreateInterface.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StateB state = new StateB(threadPanel);
+                ths[Main.nThreads] = new Thread(state);
                 Main.nThreads++;
             }
 
         });
 
         mainPanel.add(sp);
-        mainPanel.add(btnCreate);
+        mainPanel.add(btnCreateInheritance);
+        mainPanel.add(btnCreateInterface);
 
         window.getContentPane().add(mainPanel);
         window.setSize(sizeX, sizeY);

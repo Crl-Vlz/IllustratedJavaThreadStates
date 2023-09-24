@@ -90,7 +90,7 @@ public class StateA extends Thread {
                 } catch (InterruptedException err) {
                     System.err.println(err.getMessage());
                 }
-                //imgLabel.setIcon(imgRunning);
+                imgLabel.setIcon(imgRunning);
                 SwingUtilities.invokeLater(() -> {
                     btnStop.setEnabled(true);
                     btnWait.setEnabled(true);
@@ -115,7 +115,11 @@ public class StateA extends Thread {
     public void run() {
         isRunning = true;
         while (isRunning)
-            continue;
+            try{
+                Thread.sleep(1000);
+            }catch(InterruptedException e){
+                System.out.println(e.getMessage());
+            }
     }
 
 }
