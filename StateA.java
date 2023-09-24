@@ -13,7 +13,10 @@ import javax.swing.SwingUtilities;
 public class StateA extends Thread {
 
     private JPanel panel;
-    private ImageIcon img;
+    private ImageIcon imgCreated;
+    private ImageIcon imgRunning;
+    private ImageIcon imgSleeping;
+    private ImageIcon imgDead;
     private JLabel imgLabel;
 
     private boolean isRunning;
@@ -24,12 +27,18 @@ public class StateA extends Thread {
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
+        imgLabel= new JLabel();
+        
         JButton btnStart = new JButton("Start");
         JButton btnWait = new JButton("Wait");
         JButton btnStop = new JButton("Stop");
 
         JTextArea text = new JTextArea("0");
+
+        imgCreated = new ImageIcon("Images/born.gif");
+        imgRunning = new ImageIcon("Images/running.gif");
+        imgSleeping = new ImageIcon("Images/sleeping.gif");
+        imgDead = new ImageIcon("Images/dead.jpg");
 
         panel.add(btnStart);
 
@@ -40,6 +49,8 @@ public class StateA extends Thread {
                 start();
                 SwingUtilities.invokeLater(() -> {
                     panel.add(text);
+                    panel.add(imgLabel);
+                    imgLabel.setIcon(imgRunning);
                     panel.add(btnWait);
                     panel.add(btnStop);
                     panel.remove(btnStart);
@@ -64,11 +75,11 @@ public class StateA extends Thread {
         });
 
         btnWait.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 int nTime = Integer.parseInt(text.getText());
                 SwingUtilities.invokeLater(() -> {
+                    imgLabel.setIcon(imgSleeping);
                     btnStop.setEnabled(false);
                     btnWait.setEnabled(false);
                     sp.revalidate();
@@ -79,6 +90,7 @@ public class StateA extends Thread {
                     System.err.println(err.getMessage());
                 }
                 SwingUtilities.invokeLater(() -> {
+                    imgLabel.setIcon(imgRunning);
                     btnStop.setEnabled(true);
                     btnWait.setEnabled(true);
                     sp.revalidate();
@@ -94,6 +106,7 @@ public class StateA extends Thread {
             sp.add(panel);
             sp.revalidate();
         });
+
         System.out.println("thread created");
     }
 

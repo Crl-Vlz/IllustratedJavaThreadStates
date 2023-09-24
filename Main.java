@@ -15,6 +15,9 @@ public class Main { //mike_features
     private Thread ths[];
     private static int nThreads = 0;
 
+    private int sizeX = 800;    
+    private int sizeY = 800;
+
     public Main() {
 
         ths = new Thread[100];
@@ -50,7 +53,7 @@ public class Main { //mike_features
         mainPanel.add(btnCreate);
 
         window.getContentPane().add(mainPanel);
-        window.setSize(400, 400);
+        window.setSize(sizeX, sizeY);
         window.setVisible(true);
     }
 
