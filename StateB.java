@@ -23,7 +23,7 @@ public class StateB implements Runnable {
 
     public StateB(Container sp) {
 
-        isRunning = false;
+        isRunning = true;
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -91,7 +91,7 @@ public class StateB implements Runnable {
                     } catch (InterruptedException err) {
                         System.err.println(err.getMessage());
                     }
-                    if(isRunning){
+                    if (isRunning) {
                         SwingUtilities.invokeLater(() -> {
                             imgLabel.setIcon(imgRunning);
                             btnWait.setEnabled(true);
@@ -120,9 +120,9 @@ public class StateB implements Runnable {
     public void run() {
         isRunning = true;
         while (isRunning)
-            try{
+            try {
                 Thread.sleep(1000);
-            }catch(InterruptedException e){
+            } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
     }
