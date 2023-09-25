@@ -1,6 +1,8 @@
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -15,7 +17,7 @@ public class Main { // mike_features
     private static int nThreads = 0;
 
     private int sizeX = 800;
-    private int sizeY = 420;
+    private int sizeY = 620;
 
     public Main() {
 
@@ -23,6 +25,12 @@ public class Main { // mike_features
 
         window = new JFrame("Thread States");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        ImageIcon upLogo = new ImageIcon("Images/Universidad_Panamericana_Logo_Dorado (Custom).jpg");
+        JLabel lblLogo = new JLabel(upLogo);
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.LINE_AXIS));
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
@@ -54,9 +62,23 @@ public class Main { // mike_features
 
         });
 
+        JPanel namePanel = new JPanel();
+        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.PAGE_AXIS));
+
+        namePanel.add(new JLabel("Alumnos"));
+        namePanel.add(new JLabel("Carlos Manuel Velez ~ 0240599"));
+        namePanel.add(new JLabel("Miguel Angel Tovar Rodriguez ~ 0213524"));
+        namePanel.add(new JLabel("Profesor"));
+        namePanel.add(new JLabel("Juan Carlos Lopez Pimentel"));
+        namePanel.add(new JLabel("26 de Septiembre del 2023"));
+
+        infoPanel.add(lblLogo);
+        infoPanel.add(namePanel);
+
         mainPanel.add(sp);
         mainPanel.add(btnCreateInheritance);
         mainPanel.add(btnCreateInterface);
+        mainPanel.add(infoPanel);
 
         window.getContentPane().add(mainPanel);
         window.setSize(sizeX, sizeY);
