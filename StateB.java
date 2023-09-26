@@ -1,32 +1,130 @@
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 public class StateB implements Runnable {
 
     private JPanel panel;
+    private ImageIcon imgCreated;
+    private ImageIcon imgRunning;
+    private ImageIcon imgSleeping;
+    private ImageIcon imgDead;
+    private JLabel imgLabel;
 
-    public StateB(Container container) {
+    private boolean isRunning;
+
+    public StateB(Container sp) {
+
+        isRunning = true;
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        imgLabel = new JLabel();
 
-        panel.add(new JButton("Interface"));
-        panel.add(new JLabel("interface"));
+        JButton btnStart = new JButton("Start");
+        JButton btnWait = new JButton("Wait");
+        JButton btnStop = new JButton("Stop");
 
-        SwingUtilities.invokeLater(() -> {
-            container.add(panel);
-            container.revalidate();
+        JTextArea text = new JTextArea("1000");
+
+        imgCreated = new ImageIcon("Images/born.gif");
+        imgRunning = new ImageIcon("Images/running.gif");
+        imgSleeping = new ImageIcon("Images/sleeping.gif");
+        imgDead = new ImageIcon("Images/dead.jpg");
+
+        panel.add(btnStart);
+        panel.add(imgLabel);
+
+        btnStart.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    panel.add(text);
+                    imgLabel.setIcon(imgRunning);
+                    panel.add(btnWait);
+                    panel.add(btnStop);
+                    panel.remove(btnStart);
+                    sp.revalidate();
+                });
+            }
+
         });
+
+        btnStop.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imgLabel.setIcon(imgDead);
+                SwingUtilities.invokeLater(() -> {
+                    btnStop.setEnabled(false);
+                    btnWait.setEnabled(false);
+                    isRunning = false;
+                    sp.revalidate();
+                });
+            }
+
+        });
+
+        btnWait.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int nTime = Integer.parseInt(text.getText());
+                SwingUtilities.invokeLater(() -> {
+                    imgLabel.setIcon(imgSleeping);
+                    btnWait.setEnabled(false);
+                    sp.revalidate();
+                });
+
+                // Creates a new thread to not interrupt the EDT
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(nTime);
+                    } catch (InterruptedException err) {
+                        System.err.println(err.getMessage());
+                    }
+                    if (isRunning) {
+                        SwingUtilities.invokeLater(() -> {
+                            imgLabel.setIcon(imgRunning);
+                            btnWait.setEnabled(true);
+                            sp.revalidate();
+                        });
+                    }
+
+                }).start();
+
+            }
+
+        });
+
+        panel.add(new JLabel("Interface"));
+
+        panel.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            sp.add(panel);
+            imgLabel.setIcon(imgCreated);
+            sp.revalidate();
+        });
+
     }
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        isRunning = true;
+        while (isRunning)
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
     }
 
 }
